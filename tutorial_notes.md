@@ -80,9 +80,41 @@ allows you to project from data space (.domain) to pixel space (.range)
 
 "method chaining w getter/setter funcitions is all over d3."
 
-domain and range are like keys and values in the ordinal case. .rangePoints useful for binning?
+domain and range are like keys and values in the ordinal case. .rangePoints useful for binning? 
+.rangeRoundPoints() better for crisp lines in svg
+
+"d3 is a dom manipulation library." d3 databinding... selectAll("rect").data(data).enter()
+// virtual selection executes only when there is no DOM element, but there are data elements.
+
+d3.select("body".append("svg")
+  .attr("width", 250)
+  .attr("height", 250);
+
+important to set up script for the case of data coming and leaving...
+**.enter()** is only executed only for **new DOM elements**. it does NOT update data!
+"you have different phases." // Bind data // Enter // Update // Exit
+- if an attribute is constant, it should be a part of the enter phase
+- rects.exit().remove(), only executes when there are less DOM elements than previously selected
+
+cool way to scale your data automatically... 
+xScale.domain(d3.extent(data, function (d){ return d.sepal_length; })); // or set xColumn = "sepal_length" at the top of your code
+yScale.domain(d3.extent(data, function (d){ return d.petal_length; }));
+- invert y range so that minimum is at the bottom and max is top
+- use variables for "xColumn" rather than "sepal_length" so that your code is more reuseable!
+- oh man, d3.scale.log() is bae
+wow, crazy how a few lines makes your visualization so much more visually appealing (color/ring stuff)
+
+d3.scale.category10 somewhat magically assigns color to ordinal data... yay!
+define margins and take advantage of g element for transformation. d3 convention is to implement margins all in one element.
+
+population map based on longitude and latitude is coool. again, two lines of css drastically change the effect.
+ahhh look at selection code from live temp example. casts selection to new location, related to what i need to do.
+d3.svg.line() to create my lines... luckily there isn't actually live updates. only case we update is for the transition from FA to FA residuals. could be relatively simple in this way... just need to update color(or alpha) on mouse hover and selection.
+...and link to sortable demographic table. line graphs don't even have to update on sorting.
 
 
+mmm data.map? might have to rewind and hear that part again.
+Let's add some axes! append group objects for each axis? can be sorta tedious to set these up how you like.. 
+...should probably start w a template for all the CSS stuff.
 
-
-
+##FIN
